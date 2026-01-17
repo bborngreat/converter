@@ -6,7 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // ==================== CONFIGURATION ====================
-    const EXCHANGE_API_KEY = '4e8f073c8ee9e39edba6a89d'; // Get from: https://www.exchangerate-api.com/
+    const EXCHANGE_API_KEY = '4e8f073c8ee9e39edba6a89d';
     const EXCHANGE_API_URL = `https://v6.exchangerate-api.com/v6/${EXCHANGE_API_KEY}/latest/USD`;
     const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
     
@@ -29,106 +29,106 @@ document.addEventListener('DOMContentLoaded', function() {
     let isLoading = false;
     
     // ==================== CURRENCY DATA ====================
-    // Comprehensive currency list with flags
+    // Comprehensive currency list WITHOUT emojis
     const currencies = [
         // Major Global Currencies
-        { code: 'USD', name: 'US Dollar', flag: '', type: 'fiat' },
-        { code: 'EUR', name: 'Euro', flag: '', type: 'fiat' },
-        { code: 'GBP', name: 'British Pound', flag: '', type: 'fiat' },
-        { code: 'JPY', name: 'Japanese Yen', flag: '', type: 'fiat' },
-        { code: 'CAD', name: 'Canadian Dollar', flag: '', type: 'fiat' },
-        { code: 'AUD', name: 'Australian Dollar', flag: '', type: 'fiat' },
-        { code: 'CHF', name: 'Swiss Franc', flag: '', type: 'fiat' },
-        { code: 'CNY', name: 'Chinese Yuan', flag: '', type: 'fiat' },
+        { code: 'USD', name: 'US Dollar', type: 'fiat' },
+        { code: 'EUR', name: 'Euro', type: 'fiat' },
+        { code: 'GBP', name: 'British Pound', type: 'fiat' },
+        { code: 'JPY', name: 'Japanese Yen', type: 'fiat' },
+        { code: 'CAD', name: 'Canadian Dollar', type: 'fiat' },
+        { code: 'AUD', name: 'Australian Dollar', type: 'fiat' },
+        { code: 'CHF', name: 'Swiss Franc', type: 'fiat' },
+        { code: 'CNY', name: 'Chinese Yuan', type: 'fiat' },
         
         // African Currencies (including GHS!)
-        { code: 'GHS', name: 'Ghanaian Cedi', flag: '', type: 'fiat' },
-        { code: 'NGN', name: 'Nigerian Naira', flag: '', type: 'fiat' },
-        { code: 'KES', name: 'Kenyan Shilling', flag: '', type: 'fiat' },
-        { code: 'ZAR', name: 'South African Rand', flag: '', type: 'fiat' },
-        { code: 'EGP', name: 'Egyptian Pound', flag: '', type: 'fiat' },
-        { code: 'ETB', name: 'Ethiopian Birr', flag: '', type: 'fiat' },
-        { code: 'MAD', name: 'Moroccan Dirham', flag: '', type: 'fiat' },
-        { code: 'TZS', name: 'Tanzanian Shilling', flag: '', type: 'fiat' },
-        { code: 'UGX', name: 'Ugandan Shilling', flag: '', type: 'fiat' },
-        { code: 'RWF', name: 'Rwandan Franc', flag: '', type: 'fiat' },
-        { code: 'XOF', name: 'CFA Franc (BCEAO)', flag: '', type: 'fiat' },
-        { code: 'XAF', name: 'CFA Franc (BEAC)', flag: '', type: 'fiat' },
-        { code: 'GNF', name: 'Guinean Franc', flag: '', type: 'fiat' },
-        { code: 'SDG', name: 'Sudanese Pound', flag: '', type: 'fiat' },
-        { code: 'DZD', name: 'Algerian Dinar', flag: '', type: 'fiat' },
-        { code: 'TND', name: 'Tunisian Dinar', flag: '', type: 'fiat' },
-        { code: 'LYD', name: 'Libyan Dinar', flag: '', type: 'fiat' },
-        { code: 'MUR', name: 'Mauritian Rupee', flag: '', type: 'fiat' },
-        { code: 'SCR', name: 'Seychellois Rupee', flag: '', type: 'fiat' },
-        { code: 'BIF', name: 'Burundian Franc', flag: '', type: 'fiat' },
-        { code: 'CDF', name: 'Congolese Franc', flag: '', type: 'fiat' },
-        { code: 'DJF', name: 'Djiboutian Franc', flag: '', type: 'fiat' },
-        { code: 'ERN', name: 'Eritrean Nakfa', flag: '', type: 'fiat' },
-        { code: 'SLL', name: 'Sierra Leonean Leone', flag: '', type: 'fiat' },
+        { code: 'GHS', name: 'Ghanaian Cedi', type: 'fiat' },
+        { code: 'NGN', name: 'Nigerian Naira', type: 'fiat' },
+        { code: 'KES', name: 'Kenyan Shilling', type: 'fiat' },
+        { code: 'ZAR', name: 'South African Rand', type: 'fiat' },
+        { code: 'EGP', name: 'Egyptian Pound', type: 'fiat' },
+        { code: 'ETB', name: 'Ethiopian Birr', type: 'fiat' },
+        { code: 'MAD', name: 'Moroccan Dirham', type: 'fiat' },
+        { code: 'TZS', name: 'Tanzanian Shilling', type: 'fiat' },
+        { code: 'UGX', name: 'Ugandan Shilling', type: 'fiat' },
+        { code: 'RWF', name: 'Rwandan Franc', type: 'fiat' },
+        { code: 'XOF', name: 'CFA Franc (BCEAO)', type: 'fiat' },
+        { code: 'XAF', name: 'CFA Franc (BEAC)', type: 'fiat' },
+        { code: 'GNF', name: 'Guinean Franc', type: 'fiat' },
+        { code: 'SDG', name: 'Sudanese Pound', type: 'fiat' },
+        { code: 'DZD', name: 'Algerian Dinar', type: 'fiat' },
+        { code: 'TND', name: 'Tunisian Dinar', type: 'fiat' },
+        { code: 'LYD', name: 'Libyan Dinar', type: 'fiat' },
+        { code: 'MUR', name: 'Mauritian Rupee', type: 'fiat' },
+        { code: 'SCR', name: 'Seychellois Rupee', type: 'fiat' },
+        { code: 'BIF', name: 'Burundian Franc', type: 'fiat' },
+        { code: 'CDF', name: 'Congolese Franc', type: 'fiat' },
+        { code: 'DJF', name: 'Djiboutian Franc', type: 'fiat' },
+        { code: 'ERN', name: 'Eritrean Nakfa', type: 'fiat' },
+        { code: 'SLL', name: 'Sierra Leonean Leone', type: 'fiat' },
         
         // Asian & Pacific Currencies
-        { code: 'INR', name: 'Indian Rupee', flag: '', type: 'fiat' },
-        { code: 'KRW', name: 'South Korean Won', flag: '', type: 'fiat' },
-        { code: 'SGD', name: 'Singapore Dollar', flag: '', type: 'fiat' },
-        { code: 'NZD', name: 'New Zealand Dollar', flag: '', type: 'fiat' },
-        { code: 'HKD', name: 'Hong Kong Dollar', flag: '', type: 'fiat' },
-        { code: 'MYR', name: 'Malaysian Ringgit', flag: '', type: 'fiat' },
-        { code: 'THB', name: 'Thai Baht', flag: '', type: 'fiat' },
-        { code: 'IDR', name: 'Indonesian Rupiah', flag: '', type: 'fiat' },
-        { code: 'PHP', name: 'Philippine Peso', flag: '', type: 'fiat' },
-        { code: 'VND', name: 'Vietnamese Dong', flag: '', type: 'fiat' },
-        { code: 'PKR', name: 'Pakistani Rupee', flag: '', type: 'fiat' },
-        { code: 'BDT', name: 'Bangladeshi Taka', flag: '', type: 'fiat' },
-        { code: 'LKR', name: 'Sri Lankan Rupee', flag: '', type: 'fiat' },
+        { code: 'INR', name: 'Indian Rupee', type: 'fiat' },
+        { code: 'KRW', name: 'South Korean Won', type: 'fiat' },
+        { code: 'SGD', name: 'Singapore Dollar', type: 'fiat' },
+        { code: 'NZD', name: 'New Zealand Dollar', type: 'fiat' },
+        { code: 'HKD', name: 'Hong Kong Dollar', type: 'fiat' },
+        { code: 'MYR', name: 'Malaysian Ringgit', type: 'fiat' },
+        { code: 'THB', name: 'Thai Baht', type: 'fiat' },
+        { code: 'IDR', name: 'Indonesian Rupiah', type: 'fiat' },
+        { code: 'PHP', name: 'Philippine Peso', type: 'fiat' },
+        { code: 'VND', name: 'Vietnamese Dong', type: 'fiat' },
+        { code: 'PKR', name: 'Pakistani Rupee', type: 'fiat' },
+        { code: 'BDT', name: 'Bangladeshi Taka', type: 'fiat' },
+        { code: 'LKR', name: 'Sri Lankan Rupee', type: 'fiat' },
         
         // Middle Eastern Currencies
-        { code: 'AED', name: 'UAE Dirham', flag: '', type: 'fiat' },
-        { code: 'SAR', name: 'Saudi Riyal', flag: '', type: 'fiat' },
-        { code: 'QAR', name: 'Qatari Riyal', flag: '', type: 'fiat' },
-        { code: 'OMR', name: 'Omani Rial', flag: '', type: 'fiat' },
-        { code: 'KWD', name: 'Kuwaiti Dinar', flag: '', type: 'fiat' },
-        { code: 'BHD', name: 'Bahraini Dinar', flag: '', type: 'fiat' },
-        { code: 'JOD', name: 'Jordanian Dinar', flag: '', type: 'fiat' },
-        { code: 'LBP', name: 'Lebanese Pound', flag: '', type: 'fiat' },
-        { code: 'ILS', name: 'Israeli Shekel', flag: '', type: 'fiat' },
+        { code: 'AED', name: 'UAE Dirham', type: 'fiat' },
+        { code: 'SAR', name: 'Saudi Riyal', type: 'fiat' },
+        { code: 'QAR', name: 'Qatari Riyal', type: 'fiat' },
+        { code: 'OMR', name: 'Omani Rial', type: 'fiat' },
+        { code: 'KWD', name: 'Kuwaiti Dinar', type: 'fiat' },
+        { code: 'BHD', name: 'Bahraini Dinar', type: 'fiat' },
+        { code: 'JOD', name: 'Jordanian Dinar', type: 'fiat' },
+        { code: 'LBP', name: 'Lebanese Pound', type: 'fiat' },
+        { code: 'ILS', name: 'Israeli Shekel', type: 'fiat' },
         
         // European Currencies
-        { code: 'SEK', name: 'Swedish Krona', flag: '', type: 'fiat' },
-        { code: 'NOK', name: 'Norwegian Krone', flag: '', type: 'fiat' },
-        { code: 'DKK', name: 'Danish Krone', flag: '', type: 'fiat' },
-        { code: 'PLN', name: 'Polish Zloty', flag: '', type: 'fiat' },
-        { code: 'CZK', name: 'Czech Koruna', flag: '', type: 'fiat' },
-        { code: 'HUF', name: 'Hungarian Forint', flag: '', type: 'fiat' },
-        { code: 'RON', name: 'Romanian Leu', flag: '', type: 'fiat' },
-        { code: 'BGN', name: 'Bulgarian Lev', flag: '', type: 'fiat' },
-        { code: 'HRK', name: 'Croatian Kuna', flag: '', type: 'fiat' },
-        { code: 'RSD', name: 'Serbian Dinar', flag: '', type: 'fiat' },
+        { code: 'SEK', name: 'Swedish Krona', type: 'fiat' },
+        { code: 'NOK', name: 'Norwegian Krone', type: 'fiat' },
+        { code: 'DKK', name: 'Danish Krone', type: 'fiat' },
+        { code: 'PLN', name: 'Polish Zloty', type: 'fiat' },
+        { code: 'CZK', name: 'Czech Koruna', type: 'fiat' },
+        { code: 'HUF', name: 'Hungarian Forint', type: 'fiat' },
+        { code: 'RON', name: 'Romanian Leu', type: 'fiat' },
+        { code: 'BGN', name: 'Bulgarian Lev', type: 'fiat' },
+        { code: 'HRK', name: 'Croatian Kuna', type: 'fiat' },
+        { code: 'RSD', name: 'Serbian Dinar', type: 'fiat' },
         
         // Americas
-        { code: 'MXN', name: 'Mexican Peso', flag: '', type: 'fiat' },
-        { code: 'BRL', name: 'Brazilian Real', flag: '', type: 'fiat' },
-        { code: 'ARS', name: 'Argentine Peso', flag: '', type: 'fiat' },
-        { code: 'CLP', name: 'Chilean Peso', flag: '', type: 'fiat' },
-        { code: 'COP', name: 'Colombian Peso', flag: '', type: 'fiat' },
-        { code: 'PEN', name: 'Peruvian Sol', flag: '', type: 'fiat' },
-        { code: 'UYU', name: 'Uruguayan Peso', flag: '', type: 'fiat' },
-        { code: 'PYG', name: 'Paraguayan Guarani', flag: '', type: 'fiat' },
-        { code: 'BOB', name: 'Bolivian Boliviano', flag: '', type: 'fiat' },
+        { code: 'MXN', name: 'Mexican Peso', type: 'fiat' },
+        { code: 'BRL', name: 'Brazilian Real', type: 'fiat' },
+        { code: 'ARS', name: 'Argentine Peso', type: 'fiat' },
+        { code: 'CLP', name: 'Chilean Peso', type: 'fiat' },
+        { code: 'COP', name: 'Colombian Peso', type: 'fiat' },
+        { code: 'PEN', name: 'Peruvian Sol', type: 'fiat' },
+        { code: 'UYU', name: 'Uruguayan Peso', type: 'fiat' },
+        { code: 'PYG', name: 'Paraguayan Guarani', type: 'fiat' },
+        { code: 'BOB', name: 'Bolivian Boliviano', type: 'fiat' },
         
         // Cryptocurrencies
-        { code: 'BTC', name: 'Bitcoin', flag: '', type: 'crypto' },
-        { code: 'ETH', name: 'Ethereum', flag: '', type: 'crypto' },
-        { code: 'BNB', name: 'Binance Coin', flag: '', type: 'crypto' },
-        { code: 'XRP', name: 'Ripple', flag: '', type: 'crypto' },
-        { code: 'ADA', name: 'Cardano', flag: '', type: 'crypto' },
-        { code: 'SOL', name: 'Solana', flag: '', type: 'crypto' },
-        { code: 'DOGE', name: 'Dogecoin', flag: 'Ð', type: 'crypto' },
-        { code: 'DOT', name: 'Polkadot', flag: '', type: 'crypto' },
-        { code: 'MATIC', name: 'Polygon', flag: '', type: 'crypto' },
-        { code: 'LTC', name: 'Litecoin', flag: '', type: 'crypto' },
-        { code: 'USDT', name: 'Tether', flag: '', type: 'crypto' },
-        { code: 'USDC', name: 'USD Coin', flag: '', type: 'crypto' }
+        { code: 'BTC', name: 'Bitcoin', type: 'crypto' },
+        { code: 'ETH', name: 'Ethereum', type: 'crypto' },
+        { code: 'BNB', name: 'Binance Coin', type: 'crypto' },
+        { code: 'XRP', name: 'Ripple', type: 'crypto' },
+        { code: 'ADA', name: 'Cardano', type: 'crypto' },
+        { code: 'SOL', name: 'Solana', type: 'crypto' },
+        { code: 'DOGE', name: 'Dogecoin', type: 'crypto' },
+        { code: 'DOT', name: 'Polkadot', type: 'crypto' },
+        { code: 'MATIC', name: 'Polygon', type: 'crypto' },
+        { code: 'LTC', name: 'Litecoin', type: 'crypto' },
+        { code: 'USDT', name: 'Tether', type: 'crypto' },
+        { code: 'USDC', name: 'USD Coin', type: 'crypto' }
     ];
     
     // Top cryptocurrencies for the crypto grid
@@ -161,6 +161,22 @@ document.addEventListener('DOMContentLoaded', function() {
         'LTC': 'litecoin',
         'USDT': 'tether',
         'USDC': 'usd-coin'
+    };
+    
+    // Crypto icon classes
+    const cryptoIcons = {
+        'btc': 'fab fa-bitcoin',
+        'eth': 'fab fa-ethereum',
+        'bnb': 'fas fa-coins',
+        'xrp': 'fas fa-circle',
+        'ada': 'fas fa-hexagon',
+        'sol': 'fas fa-bolt',
+        'doge': 'fab fa-reddit-alien',
+        'dot': 'fas fa-circle-dot',
+        'matic': 'fas fa-layer-group',
+        'ltc': 'fab fa-ltc',
+        'usdt': 'fas fa-dollar-sign',
+        'usdc': 'fas fa-dollar-sign'
     };
     
     // ==================== INITIALIZATION ====================
@@ -200,14 +216,29 @@ document.addEventListener('DOMContentLoaded', function() {
         fromCurrency.innerHTML = '';
         toCurrency.innerHTML = '';
         
+        // Sort currencies for better UX
+        const sortedCurrencies = [...currencies].sort((a, b) => {
+            // Put popular currencies first
+            const popular = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'GHS', 'NGN'];
+            const aIndex = popular.indexOf(a.code);
+            const bIndex = popular.indexOf(b.code);
+            
+            if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+            if (aIndex !== -1) return -1;
+            if (bIndex !== -1) return 1;
+            
+            // Then sort alphabetically by name
+            return a.name.localeCompare(b.name);
+        });
+        
         // Add all currencies to dropdowns
-        currencies.forEach(currency => {
+        sortedCurrencies.forEach(currency => {
             const option1 = new Option(
-                `${currency.flag} ${currency.code} - ${currency.name}`,
+                `${currency.code} - ${currency.name}`,
                 currency.code
             );
             const option2 = new Option(
-                `${currency.flag} ${currency.code} - ${currency.name}`,
+                `${currency.code} - ${currency.name}`,
                 currency.code
             );
             
@@ -265,9 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 exchangeRates = data.conversion_rates;
                 exchangeRates['USD'] = 1; // Ensure USD rate exists
                 
-                // Log available currencies for debugging
-                const availableCurrencies = Object.keys(exchangeRates).sort();
-                console.log(`Loaded ${availableCurrencies.length} exchange rates`);
+                console.log(`Loaded ${Object.keys(exchangeRates).length} exchange rates`);
                 console.log('Sample rates:', {
                     'USD to GHS': exchangeRates['GHS'],
                     'USD to EUR': exchangeRates['EUR'],
@@ -484,7 +513,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const price = data.usd;
             const change = data.usd_24h_change || 0;
             const changeClass = change >= 0 ? 'positive' : 'negative';
-            const changeSymbol = change >= 0 ? '' : '';
+            const changeSymbol = change >= 0 ? '+' : '';
+            const iconClass = cryptoIcons[crypto.symbol] || 'fas fa-coins';
             
             const cryptoCard = document.createElement('div');
             cryptoCard.className = 'crypto-card';
@@ -495,10 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="crypto-symbol">${crypto.symbol.toUpperCase()}</div>
                     </div>
                     <div class="crypto-icon">
-                        <i class="fab fa-${crypto.symbol === 'btc' ? 'bitcoin' : 
-                                          crypto.symbol === 'eth' ? 'ethereum' : 
-                                          crypto.symbol === 'bnb' ? 'btc' : 
-                                          'coins'}"></i>
+                        <i class="${iconClass}"></i>
                     </div>
                 </div>
                 <div class="crypto-price">$${price.toLocaleString(undefined, { 
@@ -510,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ${changeSymbol}${Math.abs(change).toFixed(2)}%
                 </div>
                 <button class="use-crypto-btn" data-code="${crypto.code}">
-                    Convert with ${crypto.code}
+                    Use ${crypto.code}
                 </button>
             `;
             
@@ -850,20 +877,22 @@ document.addEventListener('DOMContentLoaded', function() {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${type === 'success' ? '#10B981' : 
-                         type === 'error' ? '#EF4444' : 
+            background: ${type === 'success' ? '#00FF88' : 
+                         type === 'error' ? '#FF6B6B' : 
                          type === 'warning' ? '#F59E0B' : '#3B82F6'};
-            color: white;
+            color: #0A0A0F;
             padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             z-index: 10000;
-            animation: slideInRight 0.3s ease;
+            animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             max-width: 350px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         `;
         
         document.body.appendChild(notification);
@@ -898,7 +927,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .notification-close {
                     background: none;
                     border: none;
-                    color: white;
+                    color: #0A0A0F;
                     cursor: pointer;
                     font-size: 1rem;
                     opacity: 0.8;
@@ -958,8 +987,8 @@ document.addEventListener('DOMContentLoaded', function() {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -969,15 +998,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const modalContent = modal.querySelector('.modal-content');
         modalContent.style.cssText = `
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 500px;
+            background: rgba(25, 25, 35, 0.95);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
         `;
         
         document.body.appendChild(modal);
@@ -1004,106 +1035,6 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.querySelector('.close-modal-btn').addEventListener('click', () => {
             modal.remove();
         });
-        
-        // Add modal styles
-        if (!document.querySelector('#modal-styles')) {
-            const style = document.createElement('style');
-            style.id = 'modal-styles';
-            style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                @keyframes slideUp {
-                    from { transform: translateY(50px); opacity: 0; }
-                    to { transform: translateY(0); opacity: 1; }
-                }
-                .modal-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 1.5rem;
-                }
-                .modal-header h3 {
-                    color: #1F2937;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                }
-                .modal-close {
-                    background: none;
-                    border: none;
-                    font-size: 2rem;
-                    color: #6B7280;
-                    cursor: pointer;
-                    line-height: 1;
-                }
-                .modal-close:hover {
-                    color: #1F2937;
-                }
-                .history-item {
-                    padding: 1rem;
-                    border-bottom: 1px solid #E5E7EB;
-                    transition: background 0.2s;
-                }
-                .history-item:hover {
-                    background: #F9FAFB;
-                }
-                .history-conversion {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    margin-bottom: 0.5rem;
-                }
-                .history-from, .history-to {
-                    font-weight: 600;
-                    color: #1F2937;
-                }
-                .history-details {
-                    display: flex;
-                    justify-content: space-between;
-                    color: #6B7280;
-                    font-size: 0.9rem;
-                }
-                .empty-history {
-                    text-align: center;
-                    padding: 3rem 1rem;
-                    color: #9CA3AF;
-                }
-                .modal-footer {
-                    margin-top: 2rem;
-                    display: flex;
-                    gap: 1rem;
-                    justify-content: flex-end;
-                }
-                .modal-btn {
-                    padding: 0.8rem 1.5rem;
-                    border-radius: 10px;
-                    border: none;
-                    cursor: pointer;
-                    font-weight: 500;
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    transition: all 0.2s;
-                }
-                .clear-history-btn {
-                    background: #FEE2E2;
-                    color: #DC2626;
-                }
-                .clear-history-btn:hover {
-                    background: #FECACA;
-                }
-                .close-modal-btn {
-                    background: #10B981;
-                    color: white;
-                }
-                .close-modal-btn:hover {
-                    background: #059669;
-                }
-            `;
-            document.head.appendChild(style);
-        }
     }
     
     // ==================== AUTO REFRESH ====================
@@ -1118,31 +1049,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 5 * 60 * 1000); // 5 minutes
     
-    // Initial rate refresh check
-    setTimeout(async () => {
-        const ratesAge = Date.now() - (localStorage.getItem('lastRateUpdate') || 0);
-        if (ratesAge > 5 * 60 * 1000) { // Older than 5 minutes
-            await fetchExchangeRates();
-            await fetchCryptoRates();
-            localStorage.setItem('lastRateUpdate', Date.now());
-        }
-    }, 1000);
-    
     // ==================== CONSOLE HELPER ====================
     console.log(`
     =============================================
     CurrencyFlow Converter Initialized
     =============================================
+    Version: 2.0 (Dark Glassmorphism Theme)
     Supported Currencies: ${currencies.length}
     Top Cryptos: ${topCryptos.length}
-    Local Storage: ${favorites.length} favorites
-    API Key: ${EXCHANGE_API_KEY ? ' Configured' : ' Missing - Get from exchangerate-api.com'}
-    
-    Test GHS conversion: 
-    1. Set "From" to USD
-    2. Set "To" to GHS
-    3. Enter amount
-    4. Click Convert!
+    API: ExchangeRate-API + CoinGecko
+    Theme: Dark Glassmorphism
     =============================================
     `);
 });
